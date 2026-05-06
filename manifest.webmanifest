@@ -1,0 +1,10 @@
+{
+  "name": "iPhone Calculator",
+  "short_name": "Calculator",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#000000",
+  "description": "Ung dung may tinh phong cach iPhone cho trinh duyet di dong.",
+  "lang": "vi"
+}

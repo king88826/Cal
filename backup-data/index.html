@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#000000">
+  <title>iPhone Calculator</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="app-shell">
+    <section class="calculator" aria-label="May tinh kieu iPhone">
+      <div id="version-badge" class="version-badge">v01.00 12:06 060526 by Tiến Đức</div>
+      <div class="display-zone" id="display-zone">
+        <ul id="history-list" class="history-list" aria-label="Lich su tinh toan"></ul>
+        <output id="preview-display" class="preview-display"></output>
+        <output id="expression-display" class="expression-display" aria-live="polite">0</output>
+      </div>
+
+      <div class="keypad" role="group" aria-label="Ban phim may tinh">
+        <button class="key key-function" type="button" data-action="clear">AC</button>
+        <button class="key key-function" type="button" data-action="toggle-sign">+/-</button>
+        <button class="key key-function" type="button" data-action="percent">%</button>
+        <button class="key key-function" type="button" data-action="backspace" aria-label="Xoa ky tu">
+          <span class="key-text-arrow">&larr;</span>
+        </button>
+        <button class="key key-utility" type="button" data-action="toggle-history" aria-label="An hien lich su">
+          <span class="icon-grid" aria-hidden="true">
+            <span></span><span></span><span></span>
+            <span></span><span></span><span></span>
+            <span></span><span></span><span></span>
+          </span>
+        </button>
+
+        <button class="key key-number" type="button" data-action="digit" data-value="7">7</button>
+        <button class="key key-number" type="button" data-action="digit" data-value="8">8</button>
+        <button class="key key-number" type="button" data-action="digit" data-value="9">9</button>
+        <button class="key key-operator" type="button" data-action="operator" data-value="divide">&divide;</button>
+        <button class="key key-utility" type="button" data-action="clear-history" aria-label="Xoa lich su">
+          <svg class="icon-svg" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M8 7h8m-7 0V5.8c0-.44.36-.8.8-.8h4.4c.44 0 .8.36.8.8V7m-9 0l.7 11.1c.07 1.05.94 1.9 2 1.9h6c1.06 0 1.93-.85 2-1.9L18 7M10 10.2v6.2m4-6.2v6.2"/>
+          </svg>
+        </button>
+
+        <button class="key key-number" type="button" data-action="digit" data-value="4">4</button>
+        <button class="key key-number" type="button" data-action="digit" data-value="5">5</button>
+        <button class="key key-number" type="button" data-action="digit" data-value="6">6</button>
+        <button class="key key-operator" type="button" data-action="operator" data-value="multiply">&times;</button>
+        <button class="key key-utility" type="button" data-action="toggle-settings" aria-label="Mo cai dat">
+          <svg class="icon-svg" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M6 7h2m3 0h7M6 12h2m3 0h7M6 17h2m3 0h7"/>
+          </svg>
+        </button>
+
+        <button class="key key-number" type="button" data-action="digit" data-value="1">1</button>
+        <button class="key key-number" type="button" data-action="digit" data-value="2">2</button>
+        <button class="key key-number" type="button" data-action="digit" data-value="3">3</button>
+        <button class="key key-operator" type="button" data-action="operator" data-value="subtract">&minus;</button>
+        <button class="key key-operator key-equals" type="button" data-action="equals">=</button>
+
+        <button class="key key-number" type="button" data-action="digit" data-value="0">0</button>
+        <button id="triple-zero-key" class="key key-number key-triple-zero" type="button" data-action="triple-zero">000</button>
+        <button class="key key-number" type="button" data-action="decimal">,</button>
+        <button class="key key-operator" type="button" data-action="operator" data-value="add">+</button>
+      </div>
+    </section>
+  </main>
+
+  <section id="settings-screen" class="settings-screen" aria-label="Cai dat" hidden>
+    <header class="settings-screen-header">
+      <div class="settings-screen-spacer"></div>
+      <h2 class="settings-screen-title">Cài đặt</h2>
+      <button class="settings-done" type="button" data-action="close-settings">Hoàn thành</button>
+    </header>
+
+    <div class="settings-screen-body">
+      <section class="settings-group">
+        <button class="settings-row settings-row-toggle" type="button" data-action="toggle-history-setting">
+          <span class="settings-label">Lịch sử</span>
+          <span id="settings-history-toggle" class="ios-switch" aria-hidden="true"><span></span></span>
+        </button>
+        <button class="settings-row settings-row-toggle" type="button" data-action="toggle-preview-setting">
+          <span class="settings-label">Kết quả thời gian thực</span>
+          <span id="settings-preview-toggle" class="ios-switch" aria-hidden="true"><span></span></span>
+        </button>
+      </section>
+
+      <section class="settings-group">
+        <button class="settings-row settings-row-detail" type="button" data-action="cycle-history-font">
+          <span class="settings-label">Cỡ chữ lịch sử</span>
+          <span id="settings-history-font-value" class="settings-detail-value">Vừa</span>
+        </button>
+        <button class="settings-row settings-row-detail" type="button" data-action="cycle-history-lines">
+          <span class="settings-label">Số dòng lịch sử</span>
+          <span id="settings-history-lines-value" class="settings-detail-value">5 dòng</span>
+        </button>
+      </section>
+
+      <section class="settings-group">
+        <button class="settings-row settings-row-detail settings-row-color" type="button" data-action="cycle-theme-color">
+          <span class="settings-label">Màu sắc phím</span>
+          <span class="settings-color-trailing">
+            <span id="settings-key-color-dot" class="settings-color-dot"></span>
+            <span class="settings-chevron">›</span>
+          </span>
+        </button>
+        <button class="settings-row settings-row-detail settings-row-color" type="button" data-action="cycle-thousand-color">
+          <span class="settings-label">Màu nghìn</span>
+          <span class="settings-color-trailing">
+            <span id="settings-thousand-color-dot" class="settings-color-dot"></span>
+            <span class="settings-chevron">›</span>
+          </span>
+        </button>
+        <button class="settings-row settings-row-detail settings-row-color" type="button" data-action="cycle-million-color">
+          <span class="settings-label">Màu triệu</span>
+          <span class="settings-color-trailing">
+            <span id="settings-million-color-dot" class="settings-color-dot"></span>
+            <span class="settings-chevron">›</span>
+          </span>
+        </button>
+        <button class="settings-row settings-row-detail settings-row-color" type="button" data-action="cycle-billion-color">
+          <span class="settings-label">Màu tỷ</span>
+          <span class="settings-color-trailing">
+            <span id="settings-billion-color-dot" class="settings-color-dot"></span>
+            <span class="settings-chevron">›</span>
+          </span>
+        </button>
+      </section>
+
+      <section class="settings-group">
+        <button class="settings-row settings-row-detail" type="button" data-action="cycle-decimals-setting">
+          <span class="settings-label">Thập phân</span>
+          <span id="settings-decimals-value" class="settings-detail-value">Không giới hạn</span>
+        </button>
+        <button class="settings-row settings-row-toggle" type="button" data-action="toggle-grouping-setting">
+          <span class="settings-label">Dấu tách hàng nghìn</span>
+          <span id="settings-grouping-toggle" class="ios-switch" aria-hidden="true"><span></span></span>
+        </button>
+      </section>
+
+      <p id="settings-version-footer" class="settings-footer">v01.00 12:06 060526 by Tiến Đức</p>
+    </div>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>
